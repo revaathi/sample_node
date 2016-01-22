@@ -16,10 +16,10 @@ env:
 
 build:
   pre_ci:
-    - docker build --rm -t=gcr.io/vidya-project/newimg1 .
+    - docker build --rm -t=revathird/rimg .
 
   pre_ci_boot:
-    image_name: gcr.io/vidya-project/newimg1
+    image_name: revathird/rimg
     image_tag: latest
     pull: false
     options: '--privileged=true --net=bridge -e FOO=true -e BOO=false'
@@ -29,7 +29,7 @@ build:
     - ls -al
 
   post_ci:
-    - docker push gcr.io/vidya-project/newimg1
+    - docker push revathird/rimg
 
   smoke_test:
     - sudo ls /
@@ -41,10 +41,10 @@ deploy:
 
 integrations:
   notification:
-    - integrationName: "vidya-slack"
+    - integrationName: "test"
       type: slack
       recipients:
-        - pvt-channel
+        - general
       branches:
         only:
           - master
@@ -55,8 +55,8 @@ integrations:
     
 
   hub:
-    - integrationName: "gcr-shiptest"
-      type: gcr
+    - integrationName: "dockerintegration1"
+      type: docker
       branches:
         only:
           - master
